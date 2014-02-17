@@ -9,10 +9,10 @@ Basically these are snippets of code I always find myself copy-pasta'ing into cy
 cycript -p SpringBoard fan.cy
 ```
 
-**alert(**<#something>**)** : shows <something> in a UIAlertView (much like alert() in javscript!)  
+**alert(**<#something>**)** : shows <something> in a UIAlertView (much like alert() in javscript).  
 **methods(**<#class>**)** : returns all selectors on a class.  
-**highlight(**<#view>**)** : traces a nice blue border on a view (great for debugging and finding what's what)  
-**unhighlight(**<#view>**)** : removes said border from a view  
+**highlight(**<#view>**)** : traces a nice blue border on a view (great for debugging and finding what's what).  
+**unhighlight(**<#view>**)** : removes said border from a view.    
 
 Oh and [cycript.org](http://www.cycript.org/).
 
