@@ -6,7 +6,7 @@ Basically these are snippets of code I always find myself copy-pasta'ing into cy
 
 ### How do I fan.cy?
 ```
-cycript -p SpringBoard fan.cy
+cycript -p SpringBoard fan.cy; cycript -p SpringBoard
 ```
 
 **alert(**<#something>**)** : shows <something> in a UIAlertView (much like alert() in javscript).  
