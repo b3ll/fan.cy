@@ -11,9 +11,19 @@ cycript -p SpringBoard fan.cy
 
 **alert(**<#something>**)** : shows <something> in a UIAlertView (much like alert() in javscript).  
 **methods(**<#class>**)** : returns all selectors on a class.  
+  
 **highlight(**<#view>**)** : traces a nice blue border on a view (great for debugging and finding what's what).  
-**unhighlight(**<#view>**)** : removes said border from a view.    
+    - view.highlight() is also possible.  
+**unhighlight(**<#view>**)** : removes said border from a view.  
+    - view.unhighlight() is also possible.  
+**setX(**<#x>, <#view>**)** : sets the x origin on a view's frame.  
+**setY(**<#y>, <#view>**)** : sets the y origin on a view's frame.  
+**setWidth(**<#width>, <#view>**)** : sets the width of a view's frame.  
+**setHeight(**<#height>, <#view>**)** : sets the height of a view's frame.  
 
+  
+**revealApp()** : Loads and starts [Reveal](http://www.revealapp.com) for said process.  
+  
 Oh and [cycript.org](http://www.cycript.org/).
 
 ### License?

@@ -8,7 +8,7 @@
 // I know this makes no sense, but no u
 if (typeof fancySetup == 'undefined') {
 
-    @import com.saurik.substrate.MS
+    @import com.saurik.substrate.MS;
 
     // kennytm / iphonedevwiki.net (http://networkpx.googlecode.com/svn/etc/std.cy, http://iphonedevwiki.net/index.php/Cycript_Tricks)
     NSLog_ = dlsym(RTLD_DEFAULT, "NSLog");
@@ -40,6 +40,19 @@ if (typeof fancySetup == 'undefined') {
     // Me
     CGAffineTransformIdentity = CGAffineTransformMakeScale(1,1);
     CATransform3DIdentity = CATransform3DMakeScale(1,1,1);
+
+    UIDeviceOrientationUnknown = 0;
+    UIDeviceOrientationPortrait = 1;
+    UIDeviceOrientationPortraitUpsideDown = 2;
+    UIDeviceOrientationLandscapeLeft = 3;
+    UIDeviceOrientationLandscapeRight = 4;
+    UIDeviceOrientationFaceUp = 5;
+    UIDeviceOrientationFaceDown = 6;
+
+    UIInterfaceOrientationPortrait = UIDeviceOrientationPortrait;
+    UIInterfaceOrientationPortraitUpsideDown = UIDeviceOrientationPortraitUpsideDown;
+    UIInterfaceOrientationLandscapeLeft = UIDeviceOrientationLandscapeRight;
+    UIInterfaceOrientationLandscapeRight = UIDeviceOrientationLandscapeLeft;
 
     function alert(message) {
         message = message.toString();
@@ -112,6 +125,15 @@ if (typeof fancySetup == 'undefined') {
     function setHeight(view, height) {
         var frame = view.frame;
         frame.size.height = height;
+    }
+
+    function revealApp() {
+        if ([UIDevice currentDevice].model.toLowerCase().indexOf("simulator") == -1)
+            dlopen("/Library/MobileSubstrate/DynamicLibraries/libReveal.dylib", RTLD_NOW);
+        else
+            dlopen("/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/libReveal.dylib", RTLD_NOW);
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"IBARevealRequestStart" object:nil];
     }
 }
 
