@@ -86,16 +86,12 @@ if (typeof fancySetup == 'undefined') {
         [view setNeedsDisplay];
     }
 
-    if ([view respondsToSelector:@selector(highlight)]) {
-        UIView.prototype.highlight = function() {
-            highlight(this);
-        }
+    UIView.prototype.highlight = function() {
+        highlight(this);
     }
 
-    if ([view respondsToSelector:@selector(unhighlight)]) {
-        UIView.prototype.unhighlight = function() {
-            unhighlight(this);
-        }
+    UIView.prototype.unhighlight = function() {
+        unhighlight(this);
     }
 
     function setX(view, x) {
