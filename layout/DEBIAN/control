@@ -2,12 +2,14 @@ Package: ca.adambell.fancy
 Name: Fan.cy
 Depends: cycript
 Architecture: iphoneos-arm
-Description: Loads of convenient helpers for Cycript: 
+Description: Loads of convenient helpers for Cycript:
+ - Alerts like Javascript ( alert("stuff"); )
+ - Print methods for Classes
  - Highlight views
- - Loads of extra constants (UIInterfaceOrientationPortrait, etc.)
  - Resize views
+ - Loads of extra constants (UIInterfaceOrientationPortrait, etc.)
  - Load Reveal for visual debugging
- 
+
  Terminal application; does not have any preferences to configure.
 Maintainer: Adam Bell
 Author: Adam Bell
