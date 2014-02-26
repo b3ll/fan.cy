@@ -1,4 +1,4 @@
-# Fan.cy Cycript Helpers
+# Fan.cy
 Collection of useful helpers I've found / written that help make working with cycript a bit more awesome.
 
 ### Intro
@@ -9,19 +9,21 @@ Basically these are snippets of code I always find myself copy-pasta'ing into cy
 cycript -p SpringBoard fan.cy; cycript -p SpringBoard
 ```
 
-**alert(**<#something>**)** : shows <something> in a UIAlertView (much like alert() in javscript).  
-**methods(**<#class>**)** : returns all selectors on a class.  
-  
-**highlight(**<#view>**)** : traces a nice blue border on a view (great for debugging and finding what's what).  
-    - view.highlight() is also possible.  
-**unhighlight(**<#view>**)** : removes said border from a view.  
-    - view.unhighlight() is also possible.  
-**setX(**<#x>, <#view>**)** : sets the x origin on a view's frame.  
-**setY(**<#y>, <#view>**)** : sets the y origin on a view's frame.  
-**setWidth(**<#width>, <#view>**)** : sets the width of a view's frame.  
-**setHeight(**<#height>, <#view>**)** : sets the height of a view's frame.  
+**alert(**_something_**)** : shows <something> in a UIAlertView (much like alert() in javscript).
 
+**methods(**_class_**)** : returns all selectors on a class.  
   
+**highlight(**_view_**)** : traces a nice blue border on a view (great for debugging and finding what's what).  
+view.**highlight()**
+
+**unhighlight(**_view_**)** : removes said border from a view.  
+view.**unhighlight()**  
+
+**setX(**_x, view_**)** : sets the x origin on a view's frame.  
+**setY(**_y, view_**)** : sets the y origin on a view's frame.  
+**setWidth(**_width, view_**)** : sets the width of a view's frame.  
+**setHeight(**_height, view_**)** : sets the height of a view's frame.  
+
 **revealApp()** : Loads and starts [Reveal](http://www.revealapp.com) for said process.  
   
 Oh and [cycript.org](http://www.cycript.org/).
