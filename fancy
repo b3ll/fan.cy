@@ -1,0 +1,2 @@
+#!/bin/sh
+cycript $@ /usr/bin/fan.cy; cycript $@
