@@ -62,14 +62,23 @@ if (typeof fancySetup == 'undefined') {
         return alert;
     }
 
-    function methods(className) {
+    function methods(className, methodToSearchFor) {
         var methods = new Array();
         var messages = className.messages;
         for (key in messages) {
-            methods.push(key);
+            if (arguments.length < 2 || key.match(methodToSearchFor)) {
+                methods.push(key);
+            }
         }
 
-        return methods.sort();
+        methods = methods.sort();
+
+        var formattedMethods = "";
+        var c = methods.length;
+        for (var i = 0; i < c; i++) {
+            formattedMethods += methods[i] + "\n";
+        }
+        return formattedMethods;
     }
 
     // Tags are probably not the nicest solutions, but objc_allocateClassPair explodes in cycript for some reason :(

@@ -9,7 +9,6 @@ Description: Loads of convenient helpers for Cycript:
  - Resize views
  - Loads of extra constants (UIInterfaceOrientationPortrait, etc.)
  - Load Reveal for visual debugging
-
  Terminal application; does not have any preferences to configure.
 Maintainer: Adam Bell
 Author: Adam Bell
