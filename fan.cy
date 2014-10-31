@@ -6,7 +6,7 @@
 
 // Don't want to inject these scripts multiple times :D
 // I know this makes no sense, but no u
-if (typeof fancySetup == 'undefined') {
+if (typeof fancySetup === 'undefined') {
 
     @import com.saurik.substrate.MS;
 
@@ -54,12 +54,27 @@ if (typeof fancySetup == 'undefined') {
     UIInterfaceOrientationLandscapeLeft = UIDeviceOrientationLandscapeRight;
     UIInterfaceOrientationLandscapeRight = UIDeviceOrientationLandscapeLeft;
 
-    function alert(message) {
+
+    // Function that allows you to include external Cycript files.
+    // Taken with love from https://github.com/Sakurina/selenography/blob/master/selftests.cy with love.
+    function include(fn) {
+      var t = [new NSTask init]; [t setLaunchPath:@"/usr/bin/cycript"]; [t setArguments:["-c", fn]];
+      var p = [NSPipe pipe]; [t setStandardOutput:p]; [t launch]; [t waitUntilExit];  [t release];
+      var s = [new NSString initWithData:[[p fileHandleForReading] readDataToEndOfFile] encoding:4];
+      var r = this.eval(s.toString()); [s release]; return r;
+    }
+
+    function alert(title, message) {
+        title = title.toString();
         message = message.toString();
-        var alert = [[UIAlertView alloc] initWithTitle:"cycript" message:message delegate:nil cancelButtonTitle:"OK" otherButtonTitles:nil];
+        var alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:"OK" otherButtonTitles:nil];
         [alert show];
 
         return alert;
+    }
+
+        function help() {
+        alert("How to fan.cy", "alert(title, message)\n methods(class)\n highlight(view)\n view.highlight()\n unhighlight(view)\n view.unhighlight()\n setX(x, view)\n setY(y, view)\n setWidth(width, view)\n setHeight(height, view)\n revealApp(path)");
     }
 
     function methods(className, methodToSearchFor) {
@@ -136,14 +151,30 @@ if (typeof fancySetup == 'undefined') {
         frame.size.height = height;
     }
 
-    function revealApp() {
-        if ([UIDevice currentDevice].model.toLowerCase().indexOf("simulator") == -1)
-            dlopen("/Library/MobileSubstrate/DynamicLibraries/libReveal.dylib", RTLD_NOW);
-        else
-            dlopen("/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/libReveal.dylib", RTLD_NOW);
+    function reveal(path) {
+        if (typeof path != 'undefined'){
+            path = path.toString();
+        }
+        else {
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"IBARevealRequestStart" object:nil];
+            if ([UIDevice currentDevice].model.toLowerCase().indexOf("simulator") == -1){
+                var path = "/Library/MobileSubstrate/DynamicLibraries/";
+            }
+            else
+            {
+                var path = "/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/";
+            }         
+        }
+        
+        if (dlopen(path + "libReveal.dylib", RTLD_NOW) === null){
+            alert("Error", "failed to load revealApp");
+        }
+        else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"IBARevealRequestStart" object:nil];
+            alert("Success", "revealApp library loaded");
+        }
     }
+
 }
 
 fancySetup = 'Go Go Gadget Fancy';
