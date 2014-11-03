@@ -37,6 +37,13 @@ if (typeof fancySetup === 'undefined') {
     CATransform3D = new Type("{CATransform3D}");
     UIEdgeInsets = new Type("{UIEdgeInsets}");
 
+    function include(fn) {
+      var t = [new NSTask init]; [t setLaunchPath:@"/usr/bin/cycript"]; [t setArguments:["-c", fn]];
+      var p = [NSPipe pipe]; [t setStandardOutput:p]; [t launch]; [t waitUntilExit];  [t release];
+      var s = [new NSString initWithData:[[p fileHandleForReading] readDataToEndOfFile] encoding:4];
+      var r = this.eval(s.toString()); [s release]; return r;
+    }
+
     // Me
     CGAffineTransformIdentity = CGAffineTransformMakeScale(1,1);
     CATransform3DIdentity = CATransform3DMakeScale(1,1,1);
@@ -53,29 +60,6 @@ if (typeof fancySetup === 'undefined') {
     UIInterfaceOrientationPortraitUpsideDown = UIDeviceOrientationPortraitUpsideDown;
     UIInterfaceOrientationLandscapeLeft = UIDeviceOrientationLandscapeRight;
     UIInterfaceOrientationLandscapeRight = UIDeviceOrientationLandscapeLeft;
-
-
-    // Function that allows you to include external Cycript files.
-    // Taken with love from https://github.com/Sakurina/selenography/blob/master/selftests.cy with love.
-    function include(fn) {
-      var t = [new NSTask init]; [t setLaunchPath:@"/usr/bin/cycript"]; [t setArguments:["-c", fn]];
-      var p = [NSPipe pipe]; [t setStandardOutput:p]; [t launch]; [t waitUntilExit];  [t release];
-      var s = [new NSString initWithData:[[p fileHandleForReading] readDataToEndOfFile] encoding:4];
-      var r = this.eval(s.toString()); [s release]; return r;
-    }
-
-    function alert(title, message) {
-        title = title.toString();
-        message = message.toString();
-        var alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:"OK" otherButtonTitles:nil];
-        [alert show];
-
-        return alert;
-    }
-
-        function help() {
-        alert("How to fan.cy", "alert(title, message)\n methods(class)\n highlight(view)\n view.highlight()\n unhighlight(view)\n view.unhighlight()\n setX(x, view)\n setY(y, view)\n setWidth(width, view)\n setHeight(height, view)\n revealApp(path)");
-    }
 
     function methods(className, methodToSearchFor) {
         var methods = new Array();
@@ -151,19 +135,46 @@ if (typeof fancySetup === 'undefined') {
         frame.size.height = height;
     }
 
-    function reveal(path) {
-        if (typeof path != 'undefined'){
-            path = path.toString();
-        }
-        else {
+    function alert(message, title) {
+        
+        if (typeof message === 'undefined'){ message = "alert";}
+        else {message = message.toString();}
+        if (typeof title === 'undefined'){ title = "Cycript";}
+        else {title = title.toString();}
 
+        var alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:"OK" otherButtonTitles:nil];
+        [alert show];
+
+        return alert;
+    }
+
+
+    function help(){
+    var docs = ["How to fan.cy",
+    "alert(title, message)",
+    "methods(class)",
+    "highlight(view) view.highlight()",
+    "unhighlight(view) view.unhighlight()",
+    "setX(x, view) setY(y, view)",
+    "setWidth(width, view) setHeight(height, view)",
+    "revealApp(path)"];
+    
+    var arrayLength = docs.length;
+    for (var i = 0; i < arrayLength; i++) {
+        NSLog(i);}
+    }
+
+    function print(text){return text;}
+        
+    function showview(view){ UIApp.keyWindow.rootViewController = [[view alloc] init]}
+
+    function reveal(path) {
+        if (typeof path !== 'undefined'){ path = path.toString();}
+        else {
             if ([UIDevice currentDevice].model.toLowerCase().indexOf("simulator") == -1){
-                var path = "/Library/MobileSubstrate/DynamicLibraries/";
-            }
+                var path = "/Library/MobileSubstrate/DynamicLibraries/";}
             else
-            {
-                var path = "/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/";
-            }         
+            {var path = "/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/";}         
         }
         
         if (dlopen(path + "libReveal.dylib", RTLD_NOW) === null){
